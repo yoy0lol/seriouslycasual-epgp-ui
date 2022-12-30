@@ -7,6 +7,9 @@ module.exports = {
       secondary: '#ffbd0a',
       text: '#FFFFFF',
       bg: '#141E24',
+      gray: '#1f2937',
+      test1: '#db2777',
+      test2: '#15803d',
     },
     extend: {
       fontFamily: {
