@@ -1,5 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import { useTable, useSortBy } from 'react-table';
 import { BsArrowDownUp } from 'react-icons/bs';
 
@@ -139,7 +141,13 @@ export default function Table() {
               {row.cells.map((cell) => {
                 return (
                   <td {...cell.getCellProps()} className={'text-md border-y-[1px] border-y-secondary py-3'}>
-                    {cell.render('Cell')}
+                    {cell.column.id === 'player' ? (
+                      <Link to={`/player/${row.original.player}`} replace>
+                        {cell.render('Cell')}
+                      </Link>
+                    ) : (
+                      cell.render('Cell')
+                    )}
                   </td>
                 );
               })}
