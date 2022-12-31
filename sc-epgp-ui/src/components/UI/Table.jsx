@@ -1,16 +1,28 @@
-import classNames from 'classnames';
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import { useEffect, useState } from 'react';
 import { useTable, useSortBy } from 'react-table';
 import { BsArrowDownUp } from 'react-icons/bs';
+import axios from 'axios';
 
 export default function Table() {
+  // States
+  const [scApiData, setScApiData] = useState([]);
+
+  // Data Fetches
+  useEffect(() => {
+    async function fetchData() {
+      const response = await axios.get('https://epgp-api.ryanwong.uk/api/Points/raider/all');
+      setScApiData(response.data);
+    }
+    fetchData();
+  }, []);
+
   const getClassColor = (wowClass) => {
     switch (wowClass) {
-      case 'Death Knight':
+      case 'DeathKnight':
         return '#C41E3A';
-      case 'Demon Hunter':
+      case 'DemonHunter':
         return '#A330C9';
       case 'Druid':
         return '#FF7C0A';
@@ -35,7 +47,7 @@ export default function Table() {
       case 'Warrior':
         return '#C69B6D';
       default:
-        return '#000000';
+        return '#FFFFFF';
     }
   };
 
@@ -46,57 +58,42 @@ export default function Table() {
         Header: 'Player',
         accessor: 'player',
         Cell: ({ row }) => <span style={{ color: getClassColor(row.original.class) }}>{row.values.player}</span>,
+        headerClassName: 'text-left',
       },
       {
         Header: 'Effort Points (EP)',
         accessor: 'ep',
+        headerClassName: 'text-right',
+        cellClassName: 'text-right',
       },
       {
         Header: 'Gear Points (GP)',
         accessor: 'gp',
+        headerClassName: 'text-right',
+        cellClassName: 'text-right',
       },
       {
         Header: 'Loot Priority (PR)',
         accessor: 'pr',
+        headerClassName: 'text-right',
+        cellClassName: 'text-right',
       },
     ],
     []
   );
 
-  // Data
-  const data = React.useMemo(
-    () => [
-      {
-        player: 'Yoyolol',
-        class: 'Demon Hunter',
-        ep: 1811,
-        gp: 2506,
-        pr: 0.722,
-      },
-      {
-        player: 'Jahim',
-        class: 'Hunter',
-        ep: 900,
-        gp: 473,
-        pr: 0.23,
-      },
-      {
-        player: 'Ryan',
-        class: 'Rogue',
-        ep: 3923,
-        gp: 1723,
-        pr: 0.92,
-      },
-      {
-        player: 'Abradaxe',
-        class: 'Warrior',
-        ep: 3923,
-        gp: 1723,
-        pr: 0.92,
-      },
-    ],
-    []
-  );
+  // Rows
+  const data = React.useMemo(() => {
+    return scApiData.map((el) => {
+      return {
+        player: el.characterName,
+        class: el.class,
+        ep: el.points.effortPoints,
+        gp: el.points.gearPoints,
+        pr: el.points.priority.toFixed(4),
+      };
+    });
+  }, [scApiData]);
 
   // Define Table
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
@@ -107,54 +104,51 @@ export default function Table() {
     useSortBy
   );
 
-  // Table Styles
-  const tableHeaderStyling = classNames([
-    'bg-secondary', // background color
-  ]);
   return (
-    <table {...getTableProps()}>
-      <thead>
-        {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps({ style: { width: 100 } })} className={'h-16 font-lora text-secondary text-left text-lg'}>
-                {column.render('Header')}
-                <button
-                  className='pl-2 h-10 w-10'
-                  onClick={() => {
-                    // Sort the table by the "player" column in ascending order when the button is clicked
-                    column.toggleSortBy();
-                  }}
-                >
-                  <BsArrowDownUp />
-                </button>
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row) => {
-          prepareRow(row);
-          return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map((cell) => {
-                return (
-                  <td {...cell.getCellProps()} className={'text-md border-y-[1px] border-y-secondary py-3'}>
-                    {cell.column.id === 'player' ? (
-                      <Link to={`/player/${row.original.player}`} replace>
-                        {cell.render('Cell')}
-                      </Link>
-                    ) : (
-                      cell.render('Cell')
-                    )}
-                  </td>
-                );
-              })}
+    <>
+      <table {...getTableProps()}>
+        <thead>
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <th {...column.getHeaderProps({ style: { width: 100 } })} className={column.headerClassName + ` h-16 font-lora text-secondary text-lg`}>
+                  {column.render('Header')}
+                  <button
+                    className='pl-3'
+                    onClick={() => {
+                      column.toggleSortBy();
+                    }}
+                  >
+                    <BsArrowDownUp />
+                  </button>
+                </th>
+              ))}
             </tr>
-          );
-        })}
-      </tbody>
-    </table>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {rows.map((row) => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map((cell) => {
+                  return (
+                    <td {...cell.getCellProps()} className={`${cell.column.cellClassName} text-md border-y-[2px] border-y-secondary py-3`}>
+                      {cell.column.id === 'player' ? (
+                        <Link to={`/player/${row.original.player}`} replace>
+                          {cell.render('Cell')}
+                        </Link>
+                      ) : (
+                        cell.render('Cell')
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </>
   );
 }
