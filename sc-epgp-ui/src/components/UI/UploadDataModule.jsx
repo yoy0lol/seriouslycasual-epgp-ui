@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { useState, useEffect, useRef } from 'react';
 
 export default function UploadDataModule() {
@@ -10,7 +11,8 @@ export default function UploadDataModule() {
   };
 
   const clearFileInput = () => {
-    fileInput.current.value = '';
+    console.log('Clear File Input clicked');
+    fileInput.current ? (fileInput.current.value = '') : null;
     setFile(null);
     setData(null);
   };
@@ -38,23 +40,30 @@ export default function UploadDataModule() {
     reader.readAsText(file);
   }, [file]);
 
+  // Styles
+  const defaultBtnStlye = classNames(['w-36 py-3']);
+
   return (
     <div className='mx-auto flex flex-col space-y-10'>
-      <label className='bg-secondary font-lora py-2 px-3 w-36 text-gray'>
-        Choose File
-        <input type='file' style={{ display: 'none' }} onChange={handleFileChange} ref={fileInput} />
-      </label>
-
-      {data && (
+      {data ? (
         <div className='flex flex-col'>
           <pre className='overflow-y-scroll max-h-72 bg-gray p-5'>{JSON.stringify(data, null, 2)}</pre>
-          <div className='flex mx-auto space-x-10'>
+          <div className='flex mx-auto space-x-10 my-5'>
             {/* Clear button goes below */}
-            <button>Clear Data</button>
+            <button className={defaultBtnStlye + ' bg-[#991b1b]'} onClick={clearFileInput}>
+              Clear Data
+            </button>
             {/* Post Button goes below */}
-            <button>Post Data</button>
+            <button className={defaultBtnStlye + ' bg-[#15803d]'} onClick={null}>
+              Post Data
+            </button>
           </div>
         </div>
+      ) : (
+        <label className='bg-secondary font-lora py-2 px-3 w-36 text-gray text-center font-bold'>
+          Choose File
+          <input type='file' style={{ display: 'none' }} onChange={handleFileChange} ref={fileInput} />
+        </label>
       )}
     </div>
   );
