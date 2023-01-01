@@ -86,6 +86,8 @@ export default function Table() {
   const data = React.useMemo(() => {
     return scApiData.map((el) => {
       return {
+        region: el.region,
+        realm: el.realm,
         player: el.characterName,
         class: el.class,
         ep: el.points.effortPoints,
@@ -103,6 +105,11 @@ export default function Table() {
     },
     useSortBy
   );
+
+  const someObject = {
+    key1: 'value1',
+    key2: 'value2',
+  };
 
   return (
     <>
@@ -135,13 +142,13 @@ export default function Table() {
                   return (
                     <td {...cell.getCellProps()} className={`${cell.column.cellClassName} text-md border-y-[2px] border-y-secondary py-3`}>
                       {cell.column.id === 'player' ? (
-                        <Link to={`/player/${row.original.player}`} replace>
-                          {cell.render('Cell')}
-                        </Link>
+                        <Link to={`/characters/${row.original.region}/${row.original.realm}/${row.original.player}`}>{cell.render('Cell')}</Link>
                       ) : (
                         cell.render('Cell')
                       )}
                     </td>
+
+                    // <Route path='/characters/:region/:realm/:playerName' element={<PlayerPage />}></Route>
                   );
                 })}
               </tr>

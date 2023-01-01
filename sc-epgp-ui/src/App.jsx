@@ -13,7 +13,7 @@ function App() {
 
         <Routes>
           <Route path='/' element={<Home />}></Route>
-          <Route path='/player/:playerName' element={<PlayerPage />}></Route>
+          <Route path='/characters/:region/:realm/:playerName' element={<PlayerPage />}></Route>
           <Route path='*' element={<Navigate to='/' />}></Route>
         </Routes>
       </BrowserRouter>

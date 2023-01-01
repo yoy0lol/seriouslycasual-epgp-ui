@@ -10,10 +10,13 @@ module.exports = {
       gray: '#1f2937',
       test1: '#db2777',
       test2: '#15803d',
+      green: '#22c55e',
+      red: '#ef4444',
     },
     extend: {
       fontFamily: {
         lora: ['Lora', 'serif'],
+        poppins: ['Poppins', 'sans-serif'],
       },
     },
   },
