@@ -44,7 +44,7 @@ export default function LootCards({ lootHistoryData }) {
             </div>
             {/* DIV for gear points */}
             <div className='flex flex-col justify-center items-center '>
-              <span className='text-sm font-lora w-max'>GP Balance:</span>
+              <span className='text-sm font-lora w-max'>GP Cost:</span>
               <span className={gPTextStyles}>{item.gearPoints < 0 ? item.gearPoints : `+${item.gearPoints}`}</span>
             </div>
           </div>
