@@ -22,7 +22,6 @@ export default function ModalSelector({ updateStateMethod }) {
 
   return (
     <div className='font-lora mx-auto'>
-      {/* Test buttons here */}
       <button
         type='button'
         onClick={() => {

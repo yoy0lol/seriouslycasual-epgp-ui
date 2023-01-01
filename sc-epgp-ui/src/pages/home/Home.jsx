@@ -3,9 +3,6 @@ import Table from '../../components/UI/Table';
 import UploadDataModule from '../../components/UI/UploadDataModule';
 import { useState } from 'react';
 
-// import ModalSelector from './components/UI/ModalSelector';
-// import Table from './components/UI/Table';
-
 export default function Home() {
   // States
   const [viewData, setViewData] = useState(true);
