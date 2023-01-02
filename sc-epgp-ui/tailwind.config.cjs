@@ -14,6 +14,7 @@ module.exports = {
       test2: '#15803d',
       green: '#22c55e',
       red: '#ef4444',
+      navBarBg: '#1B2D6E',
     },
     extend: {
       fontFamily: {
