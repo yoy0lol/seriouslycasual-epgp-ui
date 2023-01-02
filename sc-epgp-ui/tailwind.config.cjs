@@ -5,6 +5,8 @@ module.exports = {
     colors: {
       primary: '#224366',
       secondary: '#ffbd0a',
+      bgGr1: '#111827', // On app, this is b
+      bgGr2: '#18181b',
       text: '#FFFFFF',
       bg: '#141E24',
       gray: '#1f2937',
@@ -20,5 +22,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require('tailwindcss-scrollbar')],
 };
