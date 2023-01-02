@@ -18,10 +18,10 @@ export default function ModalSelector({ updateStateMethod }) {
     'px-4 py-2', //padding properties
     'text-sm', //text properties
   ]);
-  const btnSelectedClass = classNames('bg-secondary text-gray font-bold');
+  const btnSelectedClass = classNames('bg-secondary text-gray');
 
   return (
-    <div className='font-lora mx-auto'>
+    <div className='font-poppins mx-auto font-bold pb-6'>
       <button
         type='button'
         onClick={() => {

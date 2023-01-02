@@ -14,8 +14,8 @@ export default function Home() {
     setUploadData(newUploadData);
   };
   return (
-    <div className='bg-bg text-text min-h-screen min-w-screen h-full w-full'>
-      <div className='flex flex-col mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 space-y-8'>
+    <div className='h-full w-full'>
+      <div className='flex flex-col mx-auto'>
         <ModalSelector updateStateMethod={updateStateMethod} />
         {viewData && <Table />}
         {uploadData && <UploadDataModule />}

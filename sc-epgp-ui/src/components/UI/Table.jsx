@@ -14,6 +14,7 @@ export default function Table() {
     async function fetchData() {
       const response = await axios.get('https://epgp-api.ryanwong.uk/api/Points/raider/all');
       setScApiData(response.data);
+      console.log(response.data.raiders);
     }
     fetchData();
   }, []);
@@ -84,17 +85,20 @@ export default function Table() {
 
   // Rows
   const data = React.useMemo(() => {
-    return scApiData.map((el) => {
-      return {
-        region: el.region,
-        realm: el.realm,
-        player: el.characterName,
-        class: el.class,
-        ep: el.points.effortPoints,
-        gp: el.points.gearPoints,
-        pr: el.points.priority.toFixed(4),
-      };
-    });
+    if (scApiData.raiders && scApiData.raiders.length > 0) {
+      return scApiData.raiders.map((el) => {
+        return {
+          region: el.region,
+          realm: el.realm,
+          player: el.characterName,
+          class: el.class,
+          ep: el.points.effortPoints,
+          gp: el.points.gearPoints,
+          pr: el.points.priority.toFixed(4),
+        };
+      });
+    }
+    return [];
   }, [scApiData]);
 
   // Define Table
@@ -113,7 +117,7 @@ export default function Table() {
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps({ style: { width: 100 } })} className={column.headerClassName + ` h-16 font-lora text-secondary text-lg`}>
+                <th {...column.getHeaderProps({ style: { width: 100 } })} className={column.headerClassName + ` h-16 font-poppins text-secondary text-lg`}>
                   {column.render('Header')}
                   <button
                     className='pl-3'
@@ -132,10 +136,10 @@ export default function Table() {
           {rows.map((row) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()}>
+              <tr className='hover:bg-secondary/10 transition ease-in-out delay-25' {...row.getRowProps()}>
                 {row.cells.map((cell) => {
                   return (
-                    <td {...cell.getCellProps()} className={`${cell.column.cellClassName} text-md border-y-[2px] border-y-secondary py-3`}>
+                    <td {...cell.getCellProps()} className={`${cell.column.cellClassName} font-poppins text-md border-y-[2px] border-y-secondary py-3`}>
                       {cell.column.id === 'player' ? (
                         <Link to={`/characters/${row.original.region}/${row.original.realm}/${row.original.player}`}>{cell.render('Cell')}</Link>
                       ) : (

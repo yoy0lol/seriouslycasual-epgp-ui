@@ -1,6 +1,6 @@
 import scLogo from '../../assets/sc_logo_svg_edited.svg';
 import { ReactSVG } from 'react-svg';
-import { BrowserRouter, Route, Routes, NavLink, Navigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export default function NavBar() {
   return (
