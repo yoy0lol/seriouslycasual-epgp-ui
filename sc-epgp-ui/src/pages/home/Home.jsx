@@ -15,7 +15,7 @@ export default function Home() {
   };
   return (
     <div className='h-full w-full'>
-      <div className='flex flex-col mx-auto'>
+      <div className='flex flex-col mx-auto space-y-3'>
         <ModalSelector updateStateMethod={updateStateMethod} />
         {viewData && <Table />}
         {uploadData && <UploadDataModule />}

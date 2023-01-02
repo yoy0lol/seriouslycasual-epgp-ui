@@ -13,7 +13,7 @@ export default function LootCards({ lootHistoryData }) {
   return (
     <div
       ref={divRef}
-      className='flex flex-col h-full space-y-4 pr-3 overflow-auto scrollbar scrollbar-thumb-secondary scrollbar-thumb-rounded-lg scrollbar-w-2'
+      className='flex flex-col h-full space-y-4 pr-3 overflow-y-auto overflow-x-hidden scrollbar scrollbar-thumb-secondary scrollbar-thumb-rounded-lg scrollbar-w-2'
     >
       {lootHistoryData.loots.map((item) => {
         //Date Options

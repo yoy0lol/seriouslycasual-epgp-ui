@@ -21,7 +21,7 @@ export default function ModalSelector({ updateStateMethod }) {
   const btnSelectedClass = classNames('bg-secondary text-gray');
 
   return (
-    <div className='font-poppins mx-auto font-bold pb-6'>
+    <div className='font-poppins mx-auto font-bold'>
       <button
         type='button'
         onClick={() => {

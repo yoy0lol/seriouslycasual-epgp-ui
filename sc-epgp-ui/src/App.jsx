@@ -10,7 +10,7 @@ function App() {
     <BrowserRouter>
       <div className='min-h-screen min-w-screen bg-gradient-to-t from-bgGr1 to-bgGr2'>
         <NavBar />
-        <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 text-text h-full'>
+        <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 text-text h-full'>
           <Routes>
             <Route path='/' element={<Home />}></Route>
             <Route path='/characters/:region/:realm/:playerName' element={<PlayerPage />}></Route>
