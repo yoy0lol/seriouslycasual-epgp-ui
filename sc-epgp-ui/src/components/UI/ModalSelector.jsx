@@ -13,10 +13,10 @@ export default function ModalSelector({ updateStateMethod }) {
 
   // Button classes
   const btnDefaultClass = classNames([
-    'w-32', //layout properties
-    'border border-secondary', //border properties
-    'px-4 py-2', //padding properties
-    'text-sm', //text properties
+    'w-32', // layout properties
+    'border border-secondary', // border properties
+    'px-4 py-2', // padding properties
+    'text-sm', // text properties
   ]);
   const btnSelectedClass = classNames('bg-secondary text-gray');
 
@@ -28,7 +28,7 @@ export default function ModalSelector({ updateStateMethod }) {
           setViewData(true);
           setUploadData(false);
         }}
-        className={btnDefaultClass + ` rounded-l-md ` + (viewData ? btnSelectedClass : null)}
+        className={classNames(btnDefaultClass, 'rounded-l-md', { [btnSelectedClass]: viewData })}
       >
         View Data
       </button>
@@ -38,7 +38,7 @@ export default function ModalSelector({ updateStateMethod }) {
           setViewData(false);
           setUploadData(true);
         }}
-        className={btnDefaultClass + ` rounded-r-md ` + (uploadData ? btnSelectedClass : null)}
+        className={classNames(btnDefaultClass, 'rounded-r-md', { [btnSelectedClass]: uploadData })}
       >
         Upload Data
       </button>
