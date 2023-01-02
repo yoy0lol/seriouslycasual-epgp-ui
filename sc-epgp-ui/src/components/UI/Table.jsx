@@ -1,9 +1,9 @@
+import axios from 'axios';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useTable, useSortBy } from 'react-table';
 import { BsArrowDownUp } from 'react-icons/bs';
-import axios from 'axios';
 import { getClassColor } from '../../utils/getClassColor';
 
 export default function Table() {
@@ -15,7 +15,6 @@ export default function Table() {
     async function fetchData() {
       const response = await axios.get('https://epgp-api.ryanwong.uk/api/Points/raider/all');
       setScApiData(response.data);
-      console.log(response.data.raiders);
     }
     fetchData();
   }, []);
@@ -69,7 +68,7 @@ export default function Table() {
     return [];
   }, [scApiData]);
 
-  // Define Table
+  // Defined Table
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
     {
       columns,
@@ -90,7 +89,7 @@ export default function Table() {
                   <button
                     className='pl-3'
                     onClick={() => {
-                      column.toggleSortBy();
+                      column.toggleSortBy(!column.isSortedDesc); //Sort by descending if already ascending, and vice versa
                     }}
                   >
                     <BsArrowDownUp />
@@ -114,8 +113,6 @@ export default function Table() {
                         cell.render('Cell')
                       )}
                     </td>
-
-                    // <Route path='/characters/:region/:realm/:playerName' element={<PlayerPage />}></Route>
                   );
                 })}
               </tr>
