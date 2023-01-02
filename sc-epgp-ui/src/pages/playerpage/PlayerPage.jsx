@@ -69,8 +69,7 @@ export default function PlayerPage() {
 
   return (
     <div className='h-full w-full'>
-      <div className='flex flex-col mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10'>
-        {/* ok lets */}
+      <div className='flex flex-col mx-auto'>
         <div className='flex h-[800px]'>
           <div className='w-1/3 h-full'>
             {avatar && (
@@ -85,7 +84,7 @@ export default function PlayerPage() {
               {/* <div className='flex flex-col w-full'> */}
               {/* Title and sub-title: */}
               <div>
-                <h2 className='font-poppins font-black text-4xl'>{playerName}'s </h2>
+                <h2 className='font-poppins font-black text-4xl'>{playerName + (playerName.endsWith('s') ? "'" : "'s")}</h2>{' '}
                 <h1 className='font-poppins font-black text-4xl text-secondary'>Loot History</h1>
               </div>
               {/* Show loot history if loothistory gets updated, otherwise show loading div */}
