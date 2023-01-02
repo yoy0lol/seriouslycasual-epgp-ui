@@ -13,12 +13,12 @@ export default function PlayerPage() {
 
   // States
   const [lootHistoryData, setLootHistoryData] = useState(null);
-  const [pagination, setPagination] = useState(10);
+  const [pagination, setPagination] = useState(1);
   const [charMedia, setCharMedia] = useState([]);
   const [avatar, setAvatar] = useState("");
 
-  // Use Effects
-  // UseEffect to get the media asset (basically a render img of the character)
+  // Use Effects:
+  // --UseEffect to get the media asset (basically a render img of the character)
   useEffect(() => {
     const api = new BlizzAPI({
       region: "eu",
@@ -35,17 +35,21 @@ export default function PlayerPage() {
     });
   }, []);
 
-  // UseEffect to change the state of the 'avatar' based on what was received in the previous useEffect
+  // --UseEffect to change the state of the 'avatar' based on what was received in the previous useEffect
   useEffect(() => {
     if (charMedia.length > 0) {
-      console.log(charMedia);
       const main = charMedia.find((item) => item.key === "main").value;
       setAvatar(main);
-      console.log(main);
     }
   }, [charMedia]);
 
+  // --UseEffect to load all the items on page load.
+  useEffect(() => {
+    getLootHistory();
+  }, [pagination]);
+
   // Methods/Functions
+  // --Function to fetch all the loot history from Ryan's API
   const getLootHistory = async (numOfItems) => {
     try {
       const params = {
@@ -60,6 +64,12 @@ export default function PlayerPage() {
       console.log("Error in fetching loot information");
       console.error(e);
     }
+  };
+
+  // --Function to increase pagination
+  const loadMoreLoot = () => {
+    const nItems = 1;
+    setPagination((prevCount) => prevCount + nItems);
   };
 
   return (
@@ -79,20 +89,31 @@ export default function PlayerPage() {
             )}
           </div>
           <div className="w-2/3">
-            <div className="flex flex-col pl-4 ">
-              <span className="font-poppins font-black text-4xl ">
-                {playerName}'s{" "}
-              </span>
-              <span className="font-poppins font-black text-4xl text-secondary pb-4">
-                Loot History
-              </span>
-              {lootHistoryData && (
+            <div className="flex flex-col pl-4 space-y-4 place-items-center">
+              <div className="flex flex-col w-full">
+                <span className="font-poppins font-black text-4xl ">
+                  {playerName}'s{" "}
+                </span>
+                <span className="font-poppins font-black text-4xl text-secondary">
+                  Loot History
+                </span>
+              </div>
+
+              {/* Show loot history if loothistory gets updated, otherwise show loading div */}
+              {lootHistoryData ? (
                 <LootCards lootHistoryData={lootHistoryData} />
+              ) : (
+                <div>Loading loot history...</div>
               )}
+              <button
+                onClick={loadMoreLoot}
+                className="font-poppins text-sm bg-secondary w-36 p-2 rounded-lg"
+              >
+                Load More
+              </button>
             </div>
           </div>
         </div>
-        <button onClick={getLootHistory}>Get Loot History</button>
       </div>
     </div>
   );
