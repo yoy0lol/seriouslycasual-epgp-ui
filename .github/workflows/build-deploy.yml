@@ -4,8 +4,8 @@
 name: Node.js CI
 
 on:
-  #push:
-    #branches: [ "main" ]
+  push:
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
@@ -19,15 +19,19 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - working-directory: ./sc-epgp-ui
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
+        working-directory: ./sc-epgp-ui
+    - name: npm ci
+      working-directory: ./sc-epgp-ui
+      run: npm ci
+    - name: npm build
+      working-directory: ./sc-epgp-ui
+      run: npm run build --if-present
     - name: SFTP Deploy
       uses: wlixcc/SFTP-Deploy-Action@v1.2.4
       with:
@@ -35,5 +39,5 @@ jobs:
         server: ${{ secrets.DROPLET_HOST }}
         port: 22
         ssh_private_key: ${{ secrets.DROPLET_SSH_PRIVATE_KEY }}
-        local_path: ./dist
+        local_path: ./sc-epgp-ui/dist
         remote_path: ${{ secrets.DROPLET_TARGET_DIR }}
