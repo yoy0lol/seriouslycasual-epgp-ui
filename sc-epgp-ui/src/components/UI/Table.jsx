@@ -9,6 +9,7 @@ import { getClassColor } from '../../utils/getClassColor';
 export default function Table() {
   // States
   const [scApiData, setScApiData] = useState([]);
+  const [lastUploadedDate, setLastUploadedDate] = useState('');
 
   // Data Fetches
   useEffect(() => {
@@ -18,6 +19,27 @@ export default function Table() {
     }
     fetchData();
   }, []);
+
+  // UseEffects
+  // --UseEffect to set the date in a readable format.
+  useEffect(() => {
+    if (scApiData) {
+      // Format the date
+      const unformattedDate = scApiData.lastUploadedDate;
+
+      const date = new Date(unformattedDate);
+
+      const formattedDate = date.toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+      });
+
+      //Set the formatted date in the state
+      setLastUploadedDate(formattedDate);
+    }
+    return;
+  }, [lastUploadedDate]);
 
   // Columns
   const columns = React.useMemo(
@@ -53,6 +75,7 @@ export default function Table() {
   // Rows
   const data = React.useMemo(() => {
     if (scApiData.raiders && scApiData.raiders.length > 0) {
+      console.log(scApiData);
       return scApiData.raiders.map((el) => {
         return {
           region: el.region,
@@ -120,6 +143,12 @@ export default function Table() {
           })}
         </tbody>
       </table>
+      {scApiData ? (
+        <div className='block text-center text-[12px] font-poppins font-semibold'>
+          <span className=''>Last updated on </span>
+          <span className='text-secondary'>{lastUploadedDate}</span>
+        </div>
+      ) : null}
     </>
   );
 }
