@@ -24,6 +24,7 @@ export default function Table() {
   // --UseEffect to set the date in a readable format.
   useEffect(() => {
     if (scApiData) {
+      console.log(scApiData);
       // Format the date
       const unformattedDate = scApiData.lastUploadedDate;
 
@@ -38,8 +39,7 @@ export default function Table() {
       //Set the formatted date in the state
       setLastUploadedDate(formattedDate);
     }
-    return;
-  }, [lastUploadedDate]);
+  }, [scApiData]);
 
   // Columns
   const columns = React.useMemo(
@@ -75,7 +75,6 @@ export default function Table() {
   // Rows
   const data = React.useMemo(() => {
     if (scApiData.raiders && scApiData.raiders.length > 0) {
-      console.log(scApiData);
       return scApiData.raiders.map((el) => {
         return {
           region: el.region,
