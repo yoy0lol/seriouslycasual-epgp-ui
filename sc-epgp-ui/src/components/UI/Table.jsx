@@ -24,7 +24,6 @@ export default function Table() {
   // --UseEffect to set the date in a readable format.
   useEffect(() => {
     if (scApiData) {
-      console.log(scApiData);
       // Format the date
       const unformattedDate = scApiData.lastUploadedDate;
 
@@ -142,7 +141,7 @@ export default function Table() {
           })}
         </tbody>
       </table>
-      {scApiData ? (
+      {scApiData && lastUploadedDate ? (
         <div className='block text-center text-[12px] font-poppins font-semibold'>
           <span className=''>Last updated on </span>
           <span className='text-secondary'>{lastUploadedDate}</span>

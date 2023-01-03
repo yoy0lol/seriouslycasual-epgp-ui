@@ -42,7 +42,9 @@ export default function LootCards({ lootHistoryData }) {
           <div className='rounded-lg border-2 border-secondary h-24 px-4 flex' key={item.lootHistoryId}>
             {/* DIV for item name and date */}
             <div className='grow flex flex-col justify-center'>
-              <a className='font-poppins font-bold text-sm ' href={`https://www.wowhead.com/item=${item.itemString.itemId}`}></a>
+              <div>
+                <a className='font-poppins font-bold text-sm' href={`https://www.wowhead.com/item=${item.itemString.itemId}`}></a>
+              </div>
               <span className='font-poppins text-sm text-[11px] italic'>Looted on {formattedDate}</span>
             </div>
             {/* DIV for gear points */}
