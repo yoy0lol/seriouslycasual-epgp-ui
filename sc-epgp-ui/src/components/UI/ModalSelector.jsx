@@ -22,7 +22,7 @@ export default function ModalSelector({ updateStateMethod }) {
   const btnNotSelectedClass = classNames('hover:bg-secondary/50 transition-all ease-out duration-500');
 
   return (
-    <div className='font-poppins mx-auto font-bold'>
+    <div className='font-poppins mx-auto font-bold grow-0'>
       <button
         type='button'
         onClick={() => {

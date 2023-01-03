@@ -119,8 +119,6 @@ export default function PlayerPage() {
                 <span className='font-poppins'>Theres no loot for you here yet.</span>
               </div>
             )}
-
-            {/* </div> */}
           </div>
         </div>
       </div>

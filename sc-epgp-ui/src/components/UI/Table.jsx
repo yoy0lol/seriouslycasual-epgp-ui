@@ -99,7 +99,7 @@ export default function Table() {
   );
 
   return (
-    <>
+    <div className='flex flex-col flex-grow space-y-8'>
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -142,11 +142,11 @@ export default function Table() {
         </tbody>
       </table>
       {scApiData && lastUploadedDate ? (
-        <div className='block text-center text-[12px] font-poppins font-semibold'>
+        <div className='flex-grow block text-center text-[12px] font-poppins font-semibold'>
           <span className=''>Last updated on </span>
           <span className='text-secondary'>{lastUploadedDate}</span>
         </div>
       ) : null}
-    </>
+    </div>
   );
 }
