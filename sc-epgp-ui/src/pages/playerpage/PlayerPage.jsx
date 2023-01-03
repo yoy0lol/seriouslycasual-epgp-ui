@@ -27,7 +27,6 @@ export default function PlayerPage() {
     });
 
     api.getAccessToken().then(async (accessToken) => {
-      console.log(accessToken);
       const characterQuery = await api.query(`/profile/wow/character/${realm.toLowerCase()}/${playerName.toLowerCase()}/character-media?namespace=profile-eu`);
       setCharMedia(characterQuery.assets);
     });

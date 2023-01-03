@@ -1,4 +1,5 @@
 import NavBar from './components/Layout/NavBar';
+import Footer from './components/Layout/Footer';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 // Pages
@@ -17,6 +18,7 @@ function App() {
             <Route path='*' element={<Navigate to='/' />}></Route>
           </Routes>
         </div>
+        <Footer />
       </div>
     </BrowserRouter>
   );

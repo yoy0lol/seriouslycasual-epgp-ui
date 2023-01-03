@@ -19,6 +19,7 @@ export default function ModalSelector({ updateStateMethod }) {
     'text-sm', // text properties
   ]);
   const btnSelectedClass = classNames('bg-secondary text-gray');
+  const btnNotSelectedClass = classNames('hover:bg-secondary/50 transition-all ease-out duration-500');
 
   return (
     <div className='font-poppins mx-auto font-bold'>
@@ -28,7 +29,7 @@ export default function ModalSelector({ updateStateMethod }) {
           setViewData(true);
           setUploadData(false);
         }}
-        className={classNames(btnDefaultClass, 'rounded-l-md', { [btnSelectedClass]: viewData })}
+        className={classNames(btnDefaultClass, 'rounded-l-md ', { [btnSelectedClass]: viewData }, { [btnNotSelectedClass]: uploadData })}
       >
         View Data
       </button>
@@ -38,7 +39,7 @@ export default function ModalSelector({ updateStateMethod }) {
           setViewData(false);
           setUploadData(true);
         }}
-        className={classNames(btnDefaultClass, 'rounded-r-md', { [btnSelectedClass]: uploadData })}
+        className={classNames(btnDefaultClass, 'rounded-r-md', { [btnSelectedClass]: uploadData }, { [btnNotSelectedClass]: viewData })}
       >
         Upload Data
       </button>
