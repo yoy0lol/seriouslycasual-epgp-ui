@@ -13,7 +13,7 @@ export default function PlayerPage() {
 
   // States
   const [lootHistoryData, setLootHistoryData] = useState(null);
-  const [pagination, setPagination] = useState(1);
+  const [pagination, setPagination] = useState(5);
   const [charMedia, setCharMedia] = useState([]);
   const [avatar, setAvatar] = useState('');
 
@@ -63,7 +63,7 @@ export default function PlayerPage() {
 
   // --Function to increase pagination
   const loadMoreLoot = () => {
-    const nItems = 1;
+    const nItems = 5;
     setPagination((prevCount) => prevCount + nItems);
   };
 
