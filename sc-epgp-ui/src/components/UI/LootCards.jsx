@@ -39,7 +39,7 @@ export default function LootCards({ lootHistoryData }) {
         const formattedDate = date.toLocaleString('en-US', options);
 
         return (
-          <div className='rounded-lg border-2 border-secondary h-24 px-4 flex' key={item.lootHistoryId}>
+          <div className='rounded-lg border-2 border-secondary h-24 px-4 flex hover:bg-secondary/10 hover:transition-all' key={item.lootHistoryId}>
             {/* DIV for item name and date */}
             <div className='grow flex flex-col justify-center'>
               <div>
