@@ -12,7 +12,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    defaults:
+          run:
+            working-directory: ./sc-epgp-ui
     strategy:
       matrix:
         node-version: [16.x]
@@ -25,12 +27,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        working-directory: ./sc-epgp-ui
     - name: npm ci
-      working-directory: ./sc-epgp-ui
       run: npm ci
     - name: npm build
-      working-directory: ./sc-epgp-ui
       run: npm run build --if-present
     - name: SFTP Deploy
       uses: wlixcc/SFTP-Deploy-Action@v1.2.4
@@ -39,5 +38,5 @@ jobs:
         server: ${{ secrets.DROPLET_HOST }}
         port: 22
         ssh_private_key: ${{ secrets.DROPLET_SSH_PRIVATE_KEY }}
-        local_path: ./sc-epgp-ui/dist
+        local_path: ./dist
         remote_path: ${{ secrets.DROPLET_TARGET_DIR }}
