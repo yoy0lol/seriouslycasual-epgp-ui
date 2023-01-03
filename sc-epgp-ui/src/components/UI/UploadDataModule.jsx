@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React, { useState, useEffect, useRef } from 'react';
 import { AiFillWarning, AiOutlineCheckCircle } from 'react-icons/ai';
 import axios from 'axios';
+import { json } from 'react-router-dom';
 
 export default function UploadDataModule() {
   // States
@@ -19,22 +20,47 @@ export default function UploadDataModule() {
 
   const postData = () => {
     setIsLoading(true); // show loading message
-    axios
-      .post('https://epgp-api.ryanwong.uk/api/Uploads/epgp', {
-        jsonInput,
-      })
-      .then((response) => {
+
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    fetch('https://epgp-api.ryanwong.uk/api/Uploads/epgp', {
+      method: 'POST',
+      body: jsonInput,
+      headers: headers,
+    })
+      .then((response) => response.json())
+      .then((data) => {
         setIsLoading(false); // hide loading message
-        console.log(response);
+        console.log(data);
         setIsSuccessful(true);
       })
       .catch((error) => {
+        console.log('There was an error posting the request');
         setIsLoading(false); // hide loading message
         setIsError(true); // load error div
-        console.log('There was an error posting the request');
         console.log(error);
       });
   };
+
+  // const postData = () => {
+  //   setIsLoading(true); // show loading message
+  //   axios
+  //     .post('https://epgp-api.ryanwong.uk/api/Uploads/epgp', {
+  //       jsonInput,
+  //     })
+  //     .then((response) => {
+  //       setIsLoading(false); // hide loading message
+  //       console.log(response);
+  //       setIsSuccessful(true);
+  //     })
+  //     .catch((error) => {
+  //       setIsLoading(false); // hide loading message
+  //       setIsError(true); // load error div
+  //       console.log('There was an error posting the request');
+  //       console.log(error);
+  //     });
+  // };
 
   const resetRequest = () => {
     setJsonInput('');
@@ -43,24 +69,11 @@ export default function UploadDataModule() {
     setIsSuccessful(false);
   };
 
-  // FOR TESTING:
-  const setLoadingTrue = () => {
-    setIsLoading(true);
-    console.log('isLoading state is now: ' + isLoading);
-    console.log('isError state is now: ' + isError);
-  };
-  const setErrorTrue = () => {
-    setIsError(true);
-    console.log('isLoading state is now: ' + isLoading);
-    console.log('isError state is now: ' + isError);
-  };
-
   // Use effect to do stuff if the input is a JSON file
   useEffect(() => {
     if (jsonInput) {
       try {
         JSON.parse(jsonInput); // <- the JSON check.
-        console.log('Posting the request now...');
         setWarning(false);
         setShowPostButton(true);
       } catch (error) {
