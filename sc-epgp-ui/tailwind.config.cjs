@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}', './node_modules/tw-elements/dist/js/**/*.js'],
   theme: {
     colors: {
       primary: '#224366',
@@ -23,5 +23,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwindcss-scrollbar')],
+  plugins: [require('tailwindcss-scrollbar'), require('tw-elements/dist/plugin')],
 };
