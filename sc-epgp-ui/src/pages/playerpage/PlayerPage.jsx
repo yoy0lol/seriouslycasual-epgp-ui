@@ -71,22 +71,16 @@ export default function PlayerPage() {
     <div className='h-full w-full'>
       <div className='flex flex-col mx-auto'>
         <div className='flex h-[800px]'>
+          {/* Avatar portion */}
           <div className='w-1/3 h-full'>
-            {avatar && (
-              <div className='bg-no-repeat bg-center h-full rounded-xl' style={{ backgroundImage: `url(${avatar})` }}></div>
-              // <div className='h-96 object-contain'>
-              //   <img src={avatar} alt='Character avatar' className='object-contain' />
-              // </div>
-            )}
+            {avatar && <div className='bg-no-repeat bg-center h-full rounded-xl' style={{ backgroundImage: `url(${avatar})` }}></div>}
             {!avatar && (
               <div className='bg-secondary/10 h-full rounded-xl flex place-items-center justify-center items-center'>
                 <div className='spinner-border animate-spin inline-block w-12 h-12 border-8 rounded-full text-secondary' role='status'></div>
               </div>
-              // <div className='h-96 object-contain'>
-              //   <img src={avatar} alt='Character avatar' className='object-contain' />
-              // </div>
             )}
           </div>
+          {/* Loot information Portion */}
           <div className='w-2/3 h-full'>
             <div className='flex flex-col pl-4 space-y-4 place-items-left w-full '>
               {/* <div className='flex flex-col w-full'> */}
