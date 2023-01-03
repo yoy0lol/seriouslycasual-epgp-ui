@@ -78,9 +78,17 @@ export default function PlayerPage() {
               //   <img src={avatar} alt='Character avatar' className='object-contain' />
               // </div>
             )}
+            {!avatar && (
+              <div className='bg-secondary/10 h-full rounded-xl flex place-items-center justify-center items-center'>
+                <div className='spinner-border animate-spin inline-block w-12 h-12 border-8 rounded-full text-secondary' role='status'></div>
+              </div>
+              // <div className='h-96 object-contain'>
+              //   <img src={avatar} alt='Character avatar' className='object-contain' />
+              // </div>
+            )}
           </div>
           <div className='w-2/3 h-full'>
-            <div className='flex flex-col pl-4 space-y-4 place-items-left w-full h-full'>
+            <div className='flex flex-col pl-4 space-y-4 place-items-left w-full '>
               {/* <div className='flex flex-col w-full'> */}
               {/* Title and sub-title: */}
               <div>
