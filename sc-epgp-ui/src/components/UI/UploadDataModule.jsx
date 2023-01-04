@@ -116,7 +116,7 @@ export default function UploadDataModule() {
 
         {/* Warning div in the event that the text inputted is not json-friendly */}
         {warning && (
-          <div className='rounded-md bg-secondary p-4 flex items-center align-middle'>
+          <div className='rounded-md bg-secondary p-4 flex items-center align-middle font-poppins'>
             <AiFillWarning className='flex-shrink-0 text-gray h-7 w-7' />
             <p className='ml-3 text-sm font-medium text-gray'>
               It seems like the text you inputted is not a JSON file. Make sure you copy everything and try again.
