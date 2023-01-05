@@ -54,6 +54,7 @@ export default function PlayerPage() {
       };
       const response = await axios.get(`https://epgp-api.ryanwong.uk/api/Loot/region/${region}/realm/${realm}/character/${playerName}`, { params });
       setLootHistoryData(response.data);
+      console.log(response.data);
     } catch (e) {
       console.log('Error in fetching loot information');
       console.error(e);
