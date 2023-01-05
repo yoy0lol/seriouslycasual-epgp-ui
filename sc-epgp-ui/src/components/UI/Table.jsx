@@ -3,8 +3,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useTable, useSortBy } from "react-table";
-import { BsArrowDownUp } from "react-icons/bs";
+import { BsArrowDownUp, BsArrowRightShort } from "react-icons/bs";
 import { getClassColor } from "../../utils/getClassColor";
+import classNames from "classnames";
 
 export default function Table() {
   // States
@@ -44,6 +45,26 @@ export default function Table() {
   }, [scApiData]);
 
   // Columns
+
+  // Function to style/format the point differences
+  const renderPointDiff = (points, diff) => {
+    // Styles for the span with the differences:
+    const diffStyles = classNames([
+      "text-[10px] font-semibold w-10 py-[2px] rounded-sm px-1 text-center", // Default styles
+      { "bg-green/60": diff > 0 }, // if positive, go green
+      { "bg-red/60": diff < 0 }, // if positive, go green
+      { "bg-secondary/60": diff === 0 }, //if positive, keep yellow
+    ]);
+    return (
+      <div className="flex justify-end items-center space-x-1">
+        {/* Points here */}
+        <span className="pr-2">{points}</span>
+        {/* Diff Span here */}
+        <span className={diffStyles}>{diff > 0 ? "+" + diff : diff}</span>
+      </div>
+    );
+  };
+
   const columns = React.useMemo(
     () => [
       {
@@ -57,19 +78,25 @@ export default function Table() {
         headerClassName: "text-left",
       },
       {
-        Header: "Effort Points (EP)",
+        Header: "EP",
         accessor: "ep",
         headerClassName: "text-right",
         cellClassName: "text-right",
+        Cell: ({ row }) => {
+          return renderPointDiff(row.original.ep, row.original.epDiff);
+        },
       },
       {
-        Header: "Gear Points (GP)",
+        Header: "GP",
         accessor: "gp",
         headerClassName: "text-right",
         cellClassName: "text-right",
+        Cell: ({ row }) => {
+          return renderPointDiff(row.original.gp, row.original.gpDiff);
+        },
       },
       {
-        Header: "Loot Priority (PR)",
+        Header: "PR",
         accessor: "pr",
         headerClassName: "text-right",
         cellClassName: "text-right",
@@ -88,7 +115,9 @@ export default function Table() {
           player: el.characterName,
           class: el.class,
           ep: el.points.effortPoints,
+          epDiff: el.points.effortPointsDifference,
           gp: el.points.gearPoints,
+          gpDiff: el.points.gearPointsDifference,
           pr: el.points.priority.toFixed(4),
         };
       });
