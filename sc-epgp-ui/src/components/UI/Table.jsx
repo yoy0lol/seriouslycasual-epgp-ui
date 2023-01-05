@@ -43,7 +43,6 @@ export default function Table() {
   }, [scApiData]);
 
   // Columns
-
   // Function to style/format the point differences
   const renderPointDiff = (points, diff, isGpDiff) => {
     // Styles for the span with the differences:
