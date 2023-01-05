@@ -136,7 +136,18 @@ export default function Table() {
     );
 
   return (
-    <div className="flex flex-col flex-grow space-y-8">
+    <div className="flex flex-col flex-grow space-y-2">
+      <div>
+        <div className="flex flex-col w-full">
+          <h2 className="font-poppins font-black text-4xl ">Points Table</h2>
+          {scApiData && lastUploadedDate ? (
+            <div className="flex-grow block text-left text-[12px] font-poppins font-semibold">
+              <span className="">Last updated on </span>
+              <span className="text-secondary">{lastUploadedDate}</span>
+            </div>
+          ) : null}
+        </div>
+      </div>
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -194,12 +205,6 @@ export default function Table() {
           })}
         </tbody>
       </table>
-      {scApiData && lastUploadedDate ? (
-        <div className="flex-grow block text-center text-[12px] font-poppins font-semibold">
-          <span className="">Last updated on </span>
-          <span className="text-secondary">{lastUploadedDate}</span>
-        </div>
-      ) : null}
     </div>
   );
 }

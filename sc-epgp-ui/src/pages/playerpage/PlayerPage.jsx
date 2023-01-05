@@ -82,9 +82,6 @@ export default function PlayerPage() {
                 className="bg-no-repeat bg-center h-full"
                 style={{ backgroundImage: `url(${avatar})` }}
               ></div>
-              // <div className='h-96 object-contain'>
-              //   <img src={avatar} alt='Character avatar' className='object-contain' />
-              // </div>
             )}
           </div>
           <div className="w-2/3">
