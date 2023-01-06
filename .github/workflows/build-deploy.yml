@@ -22,6 +22,21 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: replace_envs
+        # uses: franzbischoff/replace_envs@7d7bb985ee9f2406b8d92bf45c53688430666b84
+        uses: franzbischoff/replace_envs@v1
+        env:
+          BATTLENET_CLIENT_ID: ${{ secrets.BATTLENET_CLIENT_ID }}
+          BATTLENET_CLIENT_SECRET: ${{ secrets.BATTLENET_CLIENT_SECRET }}
+
+        with:
+          # Origin file
+          from_file: 'example-config.json'
+          # Destination file
+          to_file: 'config.json'
+          # Commit changes?
+          commit: false
+          
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:

@@ -1,0 +1,6 @@
+{
+	"battleNet": {
+		"clientId": "${BATTLENET_CLIENT_ID}",
+		"clientSecret": "${BATTLENET_CLIENT_SECRET}"
+	}
+}
