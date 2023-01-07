@@ -31,13 +31,13 @@ jobs:
           EPGP_API_BASEURL: ${{ secrets.EPGP_API_BASEURL }}
           EPGP_API_KEY: ${{ secrets.EPGP_API_KEY }}
 
-        with:
-          # Origin file
-          from_file: 'example-config.json'
-          # Destination file
-          to_file: 'config.json'
-          # Commit changes?
-          commit: false
+      with:
+        # Origin file
+        from_file: './sc-epgp-ui/example-config.json'
+        # Destination file
+        to_file: './sc-epgp-ui/config.json'
+        # Commit changes?
+        commit: false
           
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
