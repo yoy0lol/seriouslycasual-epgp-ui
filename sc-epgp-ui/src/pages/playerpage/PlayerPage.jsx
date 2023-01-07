@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import LootCards from '../../components/UI/LootCards';
 import { useCallback } from 'react';
-import { battleNet as battleNetConfig } from '../../../config.json';
+import { battleNet as battleNetConfig, epgpApi } from '../../../config.json';
 
 export default function PlayerPage() {
   // Params
@@ -17,6 +17,8 @@ export default function PlayerPage() {
   const [pagination, setPagination] = useState(5);
   const [avatar, setAvatar] = useState('');
   const [accessToken, setAccessToken] = useState('');
+
+  const navigate = useNavigate();
 
   // Use Effects:
   // --UseEffect to get the media asset (basically a render img of the character)
@@ -45,6 +47,7 @@ export default function PlayerPage() {
     if (accessToken) {
       const config = {
         headers: { Authorization: `Bearer ${accessToken}` },
+        withCredentials: false,
       };
       const baseUrl = 'https://eu.api.blizzard.com';
       const url = `${baseUrl}/profile/wow/character/${realm.toLowerCase()}/${playerName.toLowerCase()}/character-media?namespace=profile-eu`;
@@ -52,7 +55,6 @@ export default function PlayerPage() {
         .get(url, config)
         .then((response) => {
           if (response) {
-            console.log(response);
             const main = response.data.assets.find((item) => item.key === 'main').value;
             setAvatar(main);
           }
@@ -70,17 +72,18 @@ export default function PlayerPage() {
   // Methods/Functions
   // --Function to fetch all the loot history from Ryan's API
   const getLootHistory = async () => {
-    try {
-      const params = {
-        pageSize: pagination,
-      };
-      const response = await axios.get(`https://epgp-api.ryanwong.uk/api/Loot/region/${region}/realm/${realm}/character/${playerName}`, { params });
-      setLootHistoryData(response.data);
-      console.log(response.data);
-    } catch (e) {
-      console.log('Error in fetching loot information');
-      console.error(e);
-    }
+    const params = {
+      pageSize: pagination,
+    };
+    axios
+      .get(`${epgpApi.baseUrl}/Loot/region/${region}/realm/${realm}/character/${playerName}`, { params })
+      .then((response) => {
+        console.log(response.status);
+        setLootHistoryData(response.data);
+      })
+      .catch((error) => {
+        navigate('/error/notFound');
+      });
   };
 
   // --Function to increase pagination
