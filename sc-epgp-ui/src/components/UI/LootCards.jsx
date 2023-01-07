@@ -51,7 +51,6 @@ export default function LootCards({ lootHistoryData }) {
     });
 
     setTimedLoot(lootCards);
-    console.log(lootCards);
   }, [lootHistoryData]);
 
   return (

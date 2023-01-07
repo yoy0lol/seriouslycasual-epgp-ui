@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import Home from '../home/Home';
 
 export default function NotFoundPage() {
   return (
@@ -10,10 +9,6 @@ export default function NotFoundPage() {
         Go back home
         <span aria-hidden='true'> &rarr;</span>
       </Link>
-      {/* <a href='#' className='mt-6 text-base font-medium text-secondary/50 hover:text-secondary'>
-        Go back home
-        <span aria-hidden='true'> &rarr;</span>
-      </a> */}
     </div>
   );
 }
