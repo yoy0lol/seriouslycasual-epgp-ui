@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import LootCards from '../../components/UI/LootCards';
 import { useCallback } from 'react';
@@ -17,6 +17,8 @@ export default function PlayerPage() {
 	const [pagination, setPagination] = useState(5);
 	const [avatar, setAvatar] = useState('');
 	const [accessToken, setAccessToken] = useState('');
+
+	const navigate = useNavigate();
 
 	// Use Effects:
 	// --UseEffect to get the media asset (basically a render img of the character)
@@ -72,19 +74,21 @@ export default function PlayerPage() {
 	// Methods/Functions
 	// --Function to fetch all the loot history from Ryan's API
 	const getLootHistory = async () => {
-		try {
-			const params = {
-				pageSize: pagination,
-			};
-			const response = await axios.get(
+		const params = {
+			pageSize: pagination,
+		};
+		axios
+			.get(
 				`${epgpApi.baseUrl}/Loot/region/${region}/realm/${realm}/character/${playerName}`,
 				{ params },
-			);
-			setLootHistoryData(response.data);
-		} catch (e) {
-			console.log('Error in fetching loot information');
-			console.error(e);
-		}
+			)
+			.then((response) => {
+				console.log(response.status);
+				setLootHistoryData(response.data);
+			})
+			.catch((error) => {
+				navigate('/error/notFound');
+			});
 	};
 
 	// --Function to increase pagination
