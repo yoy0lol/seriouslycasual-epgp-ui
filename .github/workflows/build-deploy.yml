@@ -28,6 +28,8 @@ jobs:
         env:
           BATTLENET_CLIENT_ID: ${{ secrets.BATTLENET_CLIENT_ID }}
           BATTLENET_CLIENT_SECRET: ${{ secrets.BATTLENET_CLIENT_SECRET }}
+          EPGP_API_BASEURL: ${{ secrets.EPGP_API_BASEURL }}
+          EPGP_API_KEY: ${{ secrets.EPGP_API_KEY }}
 
         with:
           # Origin file

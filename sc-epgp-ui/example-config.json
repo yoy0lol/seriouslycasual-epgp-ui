@@ -2,5 +2,9 @@
 	"battleNet": {
 		"clientId": "${BATTLENET_CLIENT_ID}",
 		"clientSecret": "${BATTLENET_CLIENT_SECRET}"
+	},
+	"epgpApi": {
+		"baseUrl": "${EPGP_API_BASEURL}",
+		"apiKey": "${EPGP_API_KEY}"
 	}
 }
