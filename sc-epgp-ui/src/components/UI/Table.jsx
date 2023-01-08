@@ -149,7 +149,8 @@ export default function Table() {
           ) : null}
         </div>
       </div>
-      <div className='flex flex-row'>
+      {/* Search Bar and Filters */}
+      <div className='flex flex-row justify-center place-items-center space-x-3'>
         <GlobalFilter className='flex flex-grow' filter={globalFilter} setFilter={setGlobalFilter} />
         <Context.Provider value={{ gearTypeSelection, setGearTypeSelection }}>
           <LootTypeSelect />
@@ -198,21 +199,6 @@ export default function Table() {
                 </tr>
               );
             }
-            // return (
-            //   <tr className='hover:bg-secondary/10 transition ease-in-out delay-25' {...row.getRowProps()}>
-            //     {row.cells.map((cell) => {
-            //       return (
-            //         <td {...cell.getCellProps()} className={`${cell.column.cellClassName} font-poppins sm:text-md border-y-[1px] border-y-secondary/50 py-0.5`}>
-            //           {cell.column.id === 'player' ? (
-            //             <Link to={`/characters/${row.original.region}/${row.original.realm}/${row.original.player}`}>{cell.render('Cell')}</Link>
-            //           ) : (
-            //             cell.render('Cell')
-            //           )}
-            //         </td>
-            //       );
-            //     })}
-            //   </tr>
-            // );
           })}
         </tbody>
       </table>

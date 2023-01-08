@@ -29,11 +29,12 @@ export default function LootTypeSelect() {
   };
 
   return (
-    <div className='flex justify-center'>
-      <div className='mb-3 xl:w-96'>
-        <select
-          onChange={handleChange}
-          className='form-select appearance-none
+    <div className='bg-test2'>
+      <div className='flex flex-col font-poppins justify-center place-items-center  px-3'>
+        <div className='xl:w-96 sm:w-36 min-h-full'>
+          <select
+            onChange={handleChange}
+            className='form-select appearance-none
           text-gray
       block
       w-full
@@ -48,24 +49,25 @@ export default function LootTypeSelect() {
       ease-in-out
       m-0
       focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
-          aria-label='Default select example'
-        >
-          {options.map((option) => {
-            if (option === 'All') {
-              return (
-                <option key={option} defaultValue value={option}>
-                  {option}
-                </option>
-              );
-            } else {
-              return (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              );
-            }
-          })}
-        </select>
+            aria-label='Default select example'
+          >
+            {options.map((option) => {
+              if (option === 'All') {
+                return (
+                  <option key={option} defaultValue value={option}>
+                    {option}
+                  </option>
+                );
+              } else {
+                return (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                );
+              }
+            })}
+          </select>
+        </div>
       </div>
     </div>
   );
