@@ -18,11 +18,11 @@ export default function Info() {
       <h2 className='font-poppins text-secondary font-black text-3xl pt-3'>Why EPGP?</h2>
       <p>With the change to group loot in DF, we have to change our loot system to solve the problems that PL used to solve for us. We picked EPGP because:</p>
       <div className='flex flex-row items-center'>
-        <p className='flex w-6 h-6 items-center justify-center mr-5 leading-none bg-secondary rounded-lg text-gray font-bold'>1</p>
+        <p className='flex w-6 h-6 p-3 items-center justify-center mr-5 leading-none bg-secondary rounded-lg text-gray font-bold'>1</p>
         <p>It is a transparent and hopefully fair method of loot distribution.</p>
       </div>
       <div className='flex flex-row items-center'>
-        <p className='flex w-6 h-6 items-center justify-center mr-5 leading-none bg-secondary rounded-lg text-gray font-bold'>2</p>
+        <p className='flex w-6 h-6 p-3 items-center justify-center mr-5 leading-none bg-secondary rounded-lg text-gray font-bold'>2</p>
         <p> It's a way to remind raiders to do those things we should be doing anyway such as signing for raids.</p>
       </div>
       <h2 className='font-poppins text-secondary font-black text-3xl pt-3'>How Will it Work?</h2>
