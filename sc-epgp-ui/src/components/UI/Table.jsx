@@ -1,17 +1,22 @@
 import axios from 'axios';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { useTable, useSortBy } from 'react-table';
-import { BsArrowDownUp, BsArrowRightShort } from 'react-icons/bs';
+import { useEffect, useState, createContext } from 'react';
+import { useTable, useSortBy, useGlobalFilter } from 'react-table';
+import { BsArrowDownUp } from 'react-icons/bs';
 import { getClassColor } from '../../utils/getClassColor';
 import classNames from 'classnames';
 import { epgpApi } from '../../../config.json';
+import { GlobalFilter } from '../Filters/GlobalFilter';
+import LootTypeSelect from './TableFilters/LootTypeSelect';
+
+export const Context = createContext();
 
 export default function Table() {
   // States
   const [scApiData, setScApiData] = useState({});
   const [lastUploadedDate, setLastUploadedDate] = useState('');
+  const [gearTypeSelection, setGearTypeSelection] = useState('');
 
   // Data Fetches
   useEffect(() => {
@@ -119,13 +124,17 @@ export default function Table() {
   }, [scApiData]);
 
   // Defined Table
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow, state, setGlobalFilter } = useTable(
     {
       columns,
       data,
     },
+    useGlobalFilter,
     useSortBy
   );
+
+  // Global filter
+  const { globalFilter } = state;
 
   return (
     <div className='flex flex-col flex-grow space-y-2'>
@@ -139,6 +148,12 @@ export default function Table() {
             </div>
           ) : null}
         </div>
+      </div>
+      <div className='flex flex-row'>
+        <GlobalFilter className='flex flex-grow' filter={globalFilter} setFilter={setGlobalFilter} />
+        <Context.Provider value={{ gearTypeSelection, setGearTypeSelection }}>
+          <LootTypeSelect />
+        </Context.Provider>
       </div>
       <table {...getTableProps()}>
         <thead>
@@ -163,21 +178,41 @@ export default function Table() {
         <tbody {...getTableBodyProps()}>
           {rows.map((row) => {
             prepareRow(row);
-            return (
-              <tr className='hover:bg-secondary/10 transition ease-in-out delay-25' {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return (
-                    <td {...cell.getCellProps()} className={`${cell.column.cellClassName} font-poppins sm:text-md border-y-[1px] border-y-secondary/50 py-0.5`}>
-                      {cell.column.id === 'player' ? (
-                        <Link to={`/characters/${row.original.region}/${row.original.realm}/${row.original.player}`}>{cell.render('Cell')}</Link>
-                      ) : (
-                        cell.render('Cell')
-                      )}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
+            if (gearTypeSelection[1].includes(row.original.class)) {
+              return (
+                <tr className='hover:bg-secondary/10 transition ease-in-out delay-25' {...row.getRowProps()}>
+                  {row.cells.map((cell) => {
+                    return (
+                      <td
+                        {...cell.getCellProps()}
+                        className={`${cell.column.cellClassName} font-poppins sm:text-md border-y-[1px] border-y-secondary/50 py-0.5`}
+                      >
+                        {cell.column.id === 'player' ? (
+                          <Link to={`/characters/${row.original.region}/${row.original.realm}/${row.original.player}`}>{cell.render('Cell')}</Link>
+                        ) : (
+                          cell.render('Cell')
+                        )}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            }
+            // return (
+            //   <tr className='hover:bg-secondary/10 transition ease-in-out delay-25' {...row.getRowProps()}>
+            //     {row.cells.map((cell) => {
+            //       return (
+            //         <td {...cell.getCellProps()} className={`${cell.column.cellClassName} font-poppins sm:text-md border-y-[1px] border-y-secondary/50 py-0.5`}>
+            //           {cell.column.id === 'player' ? (
+            //             <Link to={`/characters/${row.original.region}/${row.original.realm}/${row.original.player}`}>{cell.render('Cell')}</Link>
+            //           ) : (
+            //             cell.render('Cell')
+            //           )}
+            //         </td>
+            //       );
+            //     })}
+            //   </tr>
+            // );
           })}
         </tbody>
       </table>
