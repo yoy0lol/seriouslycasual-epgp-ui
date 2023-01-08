@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 export default function NavBar() {
   return (
-    <nav className='text-text bg-navBarBg border-b-2 border-secondary overflow-x-hidden w-full'>
+    <nav className='text-text bg-navBarBg border-b-2 border-secondary overflow-x-hidden w-full font-poppins'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-text h-full w-full'>
         <div className='flex overflow-hidden py-2 items-center  w-full'>
           <NavLink className='text-3xl font-lobster mr-auto' to='/'>
@@ -16,6 +16,9 @@ export default function NavBar() {
               </div>
             </div>
           </NavLink>
+          <div>
+            <NavLink to='/info'>Info</NavLink>
+          </div>
         </div>
       </div>
     </nav>

@@ -78,7 +78,6 @@ export default function PlayerPage() {
     axios
       .get(`${epgpApi.baseUrl}/Loot/region/${region}/realm/${realm}/character/${playerName}`, { params })
       .then((response) => {
-        console.log(response.status);
         setLootHistoryData(response.data);
       })
       .catch((error) => {
