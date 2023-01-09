@@ -16,7 +16,7 @@ export default function Table() {
   // States
   const [scApiData, setScApiData] = useState({});
   const [lastUploadedDate, setLastUploadedDate] = useState('');
-  const [gearTypeSelection, setGearTypeSelection] = useState('');
+  const [filters, setFilters] = useState([]);
 
   // Data Fetches
   useEffect(() => {
@@ -150,12 +150,12 @@ export default function Table() {
         </div>
       </div>
       {/* Search Bar and Filters */}
-      <div className='flex flex-row justify-center place-items-center space-x-3'>
-        <GlobalFilter className='flex flex-grow' filter={globalFilter} setFilter={setGlobalFilter} />
-        <Context.Provider value={{ gearTypeSelection, setGearTypeSelection }}>
-          <LootTypeSelect />
-        </Context.Provider>
+      <div className='flex justify-center place-items-center'>
+        <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
       </div>
+      <Context.Provider value={{ filters, setFilters }}>
+        <LootTypeSelect />
+      </Context.Provider>
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -178,8 +178,8 @@ export default function Table() {
         </thead>
         <tbody {...getTableBodyProps()}>
           {rows.map((row) => {
-            prepareRow(row);
-            if (gearTypeSelection[1].includes(row.original.class)) {
+            // Function to render rows:
+            function renderRow(row) {
               return (
                 <tr className='hover:bg-secondary/10 transition ease-in-out delay-25' {...row.getRowProps()}>
                   {row.cells.map((cell) => {
@@ -198,6 +198,14 @@ export default function Table() {
                   })}
                 </tr>
               );
+            }
+
+            prepareRow(row);
+            if (filters.length > 0 && filters.includes(row.original.class)) {
+              return renderRow(row);
+            }
+            if (filters.length === 0) {
+              return renderRow(row);
             }
           })}
         </tbody>

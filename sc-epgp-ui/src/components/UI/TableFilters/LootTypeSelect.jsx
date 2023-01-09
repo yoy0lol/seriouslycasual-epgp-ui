@@ -1,74 +1,125 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Context } from '../Table';
+import classNames from 'classnames';
+import { getClassColor } from '../../../utils/getClassColor';
+
+// Initialize gear types
+const gearTypes = {
+  Cloth: ['Priest', 'Mage', 'Warlock'],
+  Leather: ['DemonHunter', 'Rogue', 'Druid'],
+  Mail: ['Hunter', 'Shaman', 'Evoker'],
+  Plate: ['Warrior', 'Paladin', 'DeathKnight'],
+};
+
+const tokensPerClass = {
+  Zenith: ['Evoker', 'Monk', 'Rogue', 'Warrior'],
+  Dreadful: ['DeathKnight', 'DemonHunter', 'Warlock'],
+  Mystic: ['Druid', 'Hunter', 'Mage'],
+  Venerated: ['Paladin', 'Priest', 'Shaman'],
+};
+
+const twOptions = [
+  { value: 'fox', label: '🦊 Fox' },
+  { value: 'Butterfly', label: '🦋 Butterfly' },
+  { value: 'Honeybee', label: '🐝 Honeybee' },
+];
 
 export default function LootTypeSelect() {
-  // Initialize gear types
-  const gearTypes = {
-    Cloth: ['Priest', 'Mage', 'Warlock'],
-    Leather: ['DemonHunter', 'Rogue', 'Druid'],
-    Mail: ['Hunter', 'Shaman', 'Evoker'],
-    Plate: ['Warrior', 'Paladin', 'DeathKnight'],
-  };
-
-  const options = ['All', ...Object.keys(gearTypes)]; // Create an array with all the different looting options
-  gearTypes.All = Object.values(gearTypes).flat(); // Basically make an 'All' category with all classes for every gear type.
+  const [activeFilters, setActiveFilters] = useState([]);
 
   // Contexts (to share props between components)
-  const { setGearTypeSelection } = useContext(Context);
+  const { setFilters } = useContext(Context);
 
-  // UseEffect to set up 'all' as the default starting point
+  // useEffect in order to dynamically change the filters based on the filters selected
   useEffect(() => {
-    setGearTypeSelection(['All', gearTypes['All']]);
-  }, []);
+    const classes = activeFilters
+      .map((fil) => {
+        return { ...gearTypes, ...tokensPerClass }[fil];
+      })
+      .flat();
+
+    setFilters(classes);
+  }, [activeFilters]);
 
   // Define an onChange event handler for the select element
-  const handleChange = (event) => {
+  function handleChange(event) {
     event.preventDefault();
-    const itemType = event.target.value;
-    setGearTypeSelection([itemType, gearTypes[itemType]]);
-  };
+    const filterType = event.target.textContent;
+
+    // Check to see if the filter exists in activeFilters. If not, then add to it. If yes, remove it.
+    if (!activeFilters.includes(filterType)) {
+      setActiveFilters((prevFilters) => {
+        return [...prevFilters, filterType];
+      });
+    } else {
+      setActiveFilters((prevFilters) => {
+        return prevFilters.filter((filter) => filter !== filterType);
+      });
+    }
+  }
 
   return (
-    <div className='bg-test2'>
-      <div className='flex flex-col font-poppins justify-center place-items-center  px-3'>
-        <div className='xl:w-96 sm:w-36 min-h-full'>
-          <select
-            onChange={handleChange}
-            className='form-select appearance-none
-          text-gray
-      block
-      w-full
-      px-3
-      py-1.5
-      text-base
-      font-normal
-      bg-white bg-clip-padding bg-no-repeat
-      border border-solid border-gray-300
-      rounded
-      transition
-      ease-in-out
-      m-0
-      focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
-            aria-label='Default select example'
-          >
-            {options.map((option) => {
-              if (option === 'All') {
-                return (
-                  <option key={option} defaultValue value={option}>
-                    {option}
-                  </option>
-                );
-              } else {
-                return (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                );
-              }
-            })}
-          </select>
+    <>
+      {/* Gear Filters */}
+      <div className='flex flex-col space-y-2 text-[10px] font-poppins text-center'>
+        <div className='flex flex-row space-x-1 w-full'>
+          <span className='w-20 place-self-center text-left'>Filter by Gear: </span>
+          {Object.keys({ ...gearTypes }).map((el) => {
+            const filterStyles = classNames([
+              'flex py-1 px-2 rounded-lg hover:cursor-pointer border-2 border-secondary', // default styles
+              { 'bg-secondary text-gray': activeFilters.includes(el) },
+              { 'border-2 border-secondary': !activeFilters.includes(el) },
+            ]);
+            return (
+              <div onClick={handleChange} className={filterStyles} key={el}>
+                {el}
+              </div>
+            );
+          })}
+        </div>
+        {/* Token Filters */}
+        <div className='flex flex-row space-x-1 w-full'>
+          <span className='w-20 place-self-center text-left'>Filter by Token: </span>
+          {Object.keys({ ...tokensPerClass }).map((el) => {
+            const filterStyles = classNames([
+              'flex py-1 px-2 rounded-lg hover:cursor-pointer border-2 border-secondary', // default styles
+              { 'bg-secondary text-gray': activeFilters.includes(el) },
+              { 'border-2 border-secondary': !activeFilters.includes(el) },
+            ]);
+            return (
+              <div key={el} className='group relative flex justify-center'>
+                <div onClick={handleChange} className={filterStyles}>
+                  {el}
+                </div>
+                <div className='w-36 flex flex-col flex-wrap bg-navBarBg absolute top-10 scale-0 transition-all rounded p-2 text-[10px] group-hover:scale-100'>
+                  <span>Includes:</span>
+                  <ul>
+                    {tokensPerClass[el].map((wowCl) => {
+                      // Get the class color
+                      const classColor = getClassColor(wowCl);
+
+                      // Add an 's' to the end of the string if it doesn't already end in 's'
+                      const formattedWowCl = wowCl.endsWith('s') ? wowCl : `${wowCl}s`;
+
+                      // Split the string into words at each uppercase letter
+                      const words = formattedWowCl.split(/(?=[A-Z])/);
+
+                      // Join the words with a space
+                      const formattedWowClWithSpaces = words.join(' ');
+
+                      return (
+                        <li key={wowCl} style={{ color: classColor }}>
+                          {formattedWowClWithSpaces}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
-    </div>
+    </>
   );
 }

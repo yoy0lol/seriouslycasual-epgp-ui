@@ -23,7 +23,7 @@ export const getClassColor = (wowClass) => {
     case 'Shaman':
       return '#0070DD';
     case 'Warlock':
-      return '#8788EE';
+      return '#9482C9';
     case 'Warrior':
       return '#C69B6D';
     default:
