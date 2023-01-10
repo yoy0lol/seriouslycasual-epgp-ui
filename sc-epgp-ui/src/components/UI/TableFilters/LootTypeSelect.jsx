@@ -86,7 +86,7 @@ export default function LootTypeSelect() {
                 <div onClick={handleChange} className={filterStyles}>
                   {el}
                 </div>
-                <div className='select-none w-36 flex flex-col flex-wrap bg-navBarBg absolute top-10 scale-0 transition-all rounded p-2 text-[10px] group-hover:scale-100'>
+                <div className='select-none w-36 flex flex-col flex-wrap bg-navBarBg/75 border-2 border-secondary absolute top-10 scale-0 transition-all rounded p-2 text-[10px] group-hover:scale-100'>
                   <span>Includes:</span>
                   <ul>
                     {tokensPerClass[el].map((wowCl) => {
