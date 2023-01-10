@@ -25,12 +25,12 @@ jobs:
     - uses: actions/checkout@v3
     - name: replace_envs
         # uses: franzbischoff/replace_envs@7d7bb985ee9f2406b8d92bf45c53688430666b84
-        uses: franzbischoff/replace_envs@v1
-        env:
-          BATTLENET_CLIENT_ID: ${{ secrets.BATTLENET_CLIENT_ID }}
-          BATTLENET_CLIENT_SECRET: ${{ secrets.BATTLENET_CLIENT_SECRET }}
-          EPGP_API_BASEURL: ${{ secrets.EPGP_API_BASEURL }}
-          EPGP_API_KEY: ${{ secrets.EPGP_API_KEY }}
+      uses: franzbischoff/replace_envs@v1
+      env:
+        BATTLENET_CLIENT_ID: ${{ secrets.BATTLENET_CLIENT_ID }}
+        BATTLENET_CLIENT_SECRET: ${{ secrets.BATTLENET_CLIENT_SECRET }}
+        EPGP_API_BASEURL: ${{ secrets.EPGP_API_BASEURL }}
+        EPGP_API_KEY: ${{ secrets.EPGP_API_KEY }}
 
       with:
         # Origin file
