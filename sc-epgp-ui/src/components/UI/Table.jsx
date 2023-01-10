@@ -138,7 +138,7 @@ export default function Table() {
 
   return (
     <div className='flex flex-col flex-grow space-y-2'>
-      <div>
+      <div className='flex flex-col space-y-2 sm:flex-row'>
         <div className='flex flex-col w-full'>
           <h2 className='font-poppins font-black text-4xl '>Points Table</h2>
           {scApiData && lastUploadedDate ? (
@@ -148,14 +148,15 @@ export default function Table() {
             </div>
           ) : null}
         </div>
+        <Context.Provider value={{ filters, setFilters }}>
+          <LootTypeSelect />
+        </Context.Provider>
       </div>
       {/* Search Bar and Filters */}
       <div className='flex justify-center place-items-center'>
         <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
       </div>
-      <Context.Provider value={{ filters, setFilters }}>
-        <LootTypeSelect />
-      </Context.Provider>
+
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
