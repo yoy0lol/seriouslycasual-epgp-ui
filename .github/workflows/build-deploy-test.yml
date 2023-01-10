@@ -1,0 +1,61 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Deploy
+
+on:
+  push:
+    branches: [ "development" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    environment: Test
+    defaults:
+          run:
+            working-directory: ./sc-epgp-ui
+    strategy:
+      matrix:
+        node-version: [16.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: replace_envs
+        # uses: franzbischoff/replace_envs@7d7bb985ee9f2406b8d92bf45c53688430666b84
+      uses: franzbischoff/replace_envs@v1
+      env:
+        BATTLENET_CLIENT_ID: ${{ secrets.BATTLENET_CLIENT_ID }}
+        BATTLENET_CLIENT_SECRET: ${{ secrets.BATTLENET_CLIENT_SECRET }}
+        EPGP_API_BASEURL: ${{ secrets.EPGP_API_BASEURL }}
+        EPGP_API_KEY: ${{ secrets.EPGP_API_KEY }}
+
+      with:
+        # Origin file
+        from_file: './sc-epgp-ui/example-config.json'
+        # Destination file
+        to_file: './sc-epgp-ui/config.json'
+        # Commit changes?
+        commit: false
+          
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: '**/package-lock.json'
+    - name: npm ci
+      run: npm ci
+    - name: npm build
+      run: npm run build --if-present
+    - name: SFTP Deploy
+      uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+      with:
+        username: ${{ secrets.DROPLET_USER }}
+        server: ${{ secrets.DROPLET_HOST }}
+        port: 22
+        ssh_private_key: ${{ secrets.DROPLET_SSH_PRIVATE_KEY }}
+        local_path: ./sc-epgp-ui/dist/*
+        remote_path: ${{ secrets.DROPLET_TARGET_DIR }}
