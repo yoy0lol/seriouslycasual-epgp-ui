@@ -58,7 +58,7 @@ export default function LootTypeSelect() {
       {/* Gear Filters */}
       <div className='flex flex-col space-y-2 text-[10px] font-poppins text-center'>
         <div className='flex flex-row space-x-1 w-full'>
-          <span className='w-20 place-self-center text-left'>Filter by Gear: </span>
+          <span className='w-[72px] place-self-center text-left'>Select Gear:</span>
           {Object.keys({ ...gearTypes }).map((el) => {
             const filterStyles = classNames([
               'flex py-1 px-2 rounded-lg hover:cursor-pointer border-2 border-secondary select-none', // default styles
@@ -74,7 +74,7 @@ export default function LootTypeSelect() {
         </div>
         {/* Token Filters */}
         <div className='flex flex-row space-x-1 w-full'>
-          <span className='w-20 place-self-center text-left'>Filter by Token: </span>
+          <span className='w-[72px] place-self-center text-left'>Select Token:</span>
           {Object.keys({ ...tokensPerClass }).map((el) => {
             const filterStyles = classNames([
               'flex py-1 px-2 rounded-lg hover:cursor-pointer border-2 border-secondary select-none', // default styles
