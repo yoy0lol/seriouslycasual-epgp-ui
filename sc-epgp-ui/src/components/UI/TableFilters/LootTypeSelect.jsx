@@ -6,7 +6,7 @@ import { getClassColor } from '../../../utils/getClassColor';
 // Initialize gear per class
 const gearTypes = {
   Cloth: ['Priest', 'Mage', 'Warlock'],
-  Leather: ['DemonHunter', 'Rogue', 'Druid'],
+  Leather: ['DemonHunter', 'Rogue', 'Druid', 'Monk'],
   Mail: ['Hunter', 'Shaman', 'Evoker'],
   Plate: ['Warrior', 'Paladin', 'DeathKnight'],
 };
