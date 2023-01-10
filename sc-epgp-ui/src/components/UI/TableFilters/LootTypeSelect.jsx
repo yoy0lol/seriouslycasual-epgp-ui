@@ -61,7 +61,7 @@ export default function LootTypeSelect() {
           <span className='w-20 place-self-center text-left'>Filter by Gear: </span>
           {Object.keys({ ...gearTypes }).map((el) => {
             const filterStyles = classNames([
-              'flex py-1 px-2 rounded-lg hover:cursor-pointer border-2 border-secondary', // default styles
+              'flex py-1 px-2 rounded-lg hover:cursor-pointer border-2 border-secondary select-none', // default styles
               { 'bg-secondary text-gray': activeFilters.includes(el) },
               { 'border-2 border-secondary': !activeFilters.includes(el) },
             ]);
@@ -77,7 +77,7 @@ export default function LootTypeSelect() {
           <span className='w-20 place-self-center text-left'>Filter by Token: </span>
           {Object.keys({ ...tokensPerClass }).map((el) => {
             const filterStyles = classNames([
-              'flex py-1 px-2 rounded-lg hover:cursor-pointer border-2 border-secondary', // default styles
+              'flex py-1 px-2 rounded-lg hover:cursor-pointer border-2 border-secondary select-none', // default styles
               { 'bg-secondary text-gray': activeFilters.includes(el) },
               { 'border-2 border-secondary': !activeFilters.includes(el) },
             ]);
@@ -86,7 +86,7 @@ export default function LootTypeSelect() {
                 <div onClick={handleChange} className={filterStyles}>
                   {el}
                 </div>
-                <div className='w-36 flex flex-col flex-wrap bg-navBarBg absolute top-10 scale-0 transition-all rounded p-2 text-[10px] group-hover:scale-100'>
+                <div className='select-none w-36 flex flex-col flex-wrap bg-navBarBg absolute top-10 scale-0 transition-all rounded p-2 text-[10px] group-hover:scale-100'>
                   <span>Includes:</span>
                   <ul>
                     {tokensPerClass[el].map((wowCl) => {
