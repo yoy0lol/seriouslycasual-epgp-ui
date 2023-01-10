@@ -3,7 +3,7 @@ import { Context } from '../Table';
 import classNames from 'classnames';
 import { getClassColor } from '../../../utils/getClassColor';
 
-// Initialize gear types
+// Initialize gear per class
 const gearTypes = {
   Cloth: ['Priest', 'Mage', 'Warlock'],
   Leather: ['DemonHunter', 'Rogue', 'Druid'],
@@ -11,18 +11,13 @@ const gearTypes = {
   Plate: ['Warrior', 'Paladin', 'DeathKnight'],
 };
 
+// Initialize tokens per class
 const tokensPerClass = {
   Zenith: ['Evoker', 'Monk', 'Rogue', 'Warrior'],
   Dreadful: ['DeathKnight', 'DemonHunter', 'Warlock'],
   Mystic: ['Druid', 'Hunter', 'Mage'],
   Venerated: ['Paladin', 'Priest', 'Shaman'],
 };
-
-const twOptions = [
-  { value: 'fox', label: '🦊 Fox' },
-  { value: 'Butterfly', label: '🦋 Butterfly' },
-  { value: 'Honeybee', label: '🐝 Honeybee' },
-];
 
 export default function LootTypeSelect() {
   const [activeFilters, setActiveFilters] = useState([]);
