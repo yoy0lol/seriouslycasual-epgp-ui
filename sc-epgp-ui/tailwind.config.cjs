@@ -20,10 +20,6 @@ module.exports = {
       green: '#22c55e',
       red: '#ef4444',
       navBarBg: '#1B2D6E',
-      // class colors
-      DeathKnight: '#C41E3A',
-      DemonHunter: '#A330C9',
-      Mage: '#3FC7EB',
     },
     extend: {
       fontFamily: {
