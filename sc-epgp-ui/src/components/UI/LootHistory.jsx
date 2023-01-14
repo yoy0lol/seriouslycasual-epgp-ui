@@ -49,7 +49,7 @@ export default function LootHistory() {
 
         {/* If raid dates exist, and the array of raidDates is more than 0, then load the date chooser */}
         {raidDates && raidDates.length > 0 && (
-          <div className='flex flex-row space-x-3 min-w-fit text-[12px] font-bold bg-navBarBg p-[4px] rounded-lg'>
+          <div className='flex flex-row space-x-3 min-w-fit text-[12px] font-bold border-2 border-secondary p-[4px] rounded-lg'>
             {/* If page reaches the last index of the raid dates array, hide it*/}
             {page + 1 === raidDates.length ? null : (
               <button className='text-secondary text-2xl' onClick={() => setPage((prevValue) => prevValue + 1)}>
