@@ -44,7 +44,7 @@ export default function LootHistory() {
     { 'invisible disabled': page + 1 === raidDates.length }, // apply if inactive
   ]);
 
-  // -- For the left arrow, If page reaches the last index of the raid dates array, hide it
+  // -- For the right arrow, If page is zero, hide it.
   const rightArrowBtnStyle = classNames([
     { 'text-secondary text-2xl': page !== 0 }, // apply if active
     { 'invisible disabled': page === 0 }, // apply if inactive
