@@ -148,11 +148,12 @@ export default function Table() {
             </div>
           ) : null}
         </div>
+        {/* Selection Filters */}
         <Context.Provider value={{ filters, setFilters }}>
           <LootTypeSelect />
         </Context.Provider>
       </div>
-      {/* Search Bar and Filters */}
+      {/* Search Bar */}
       <div className='flex justify-center place-items-center'>
         <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
       </div>
